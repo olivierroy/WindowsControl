@@ -1,0 +1,20 @@
+# Go build artifacts
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Go workspace/cache
+*.log
+coverage.txt
+
+# Binaries
+/windowscontrol
+/windowscontrol.exe
+
+# Editors/OS
+.DS_Store
+Thumbs.db
