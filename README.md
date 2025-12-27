@@ -1,4 +1,4 @@
-# Windows Control
+# WindowsControl
 
 A minimal Go-powered web UI that exposes buttons to shut down, restart, or restart straight into BIOS/UEFI on the Windows machine it runs on. It can run interactively (for testing or ad-hoc use) or as a Windows Service so the HTTP endpoint is always available after boot. This is particularly handy for headless or hard-to-reach systems (rack servers, media centers, remote labs) where pressing the physical power button or entering BIOS locally would otherwise require hands-on access.
 
@@ -7,7 +7,7 @@ A minimal Go-powered web UI that exposes buttons to shut down, restart, or resta
 ## Requirements
 
 - Go 1.24 or newer (module sets toolchain to go1.24.11 automatically)
-- Windows host if you intend to execute the actual shutdown command
+- Windows host if you intend to execute the actual shutdown command (tested on Windows 10/11; Windows 8+ is recommended for `/fw` firmware restarts, while shutdown/restart still work down to Windows 7)
 - Administrator privileges when running interactively or installing the service (required for invoking `shutdown` and interacting with SCM)
 
 ## Running locally
@@ -24,6 +24,10 @@ Browse to `http://localhost:8181` and use the **Shut Down**, **Restart**, or **R
 - **Restart to BIOS** runs `shutdown /r /fw /t 0`, which only works on UEFI-capable systems and instructs Windows to enter the firmware configuration UI on the next boot.
 
 On non-Windows hosts the endpoints respond with a message indicating that power control is unavailable.
+
+## Prebuilt downloads
+
+Every tagged release (`v*`) automatically builds `windowscontrol.exe` through GitHub Actions. Download the latest binary directly from the [GitHub Releases page](../../releases) if you don't want to build it yourself.
 
 ## Running as a Windows Service
 
