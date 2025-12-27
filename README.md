@@ -18,12 +18,14 @@ go run .
 GOOS=windows go build -o windowscontrol.exe .
 ```
 
-Browse to `http://localhost:8181` and use the **Shut Down**, **Restart**, or **Restart to BIOS** buttons. Handlers confirm every request and translate it into the relevant Windows `shutdown` command.
+Browse to `http://localhost:8181` and use the **Shut Down**, **Restart**, or **Restart to BIOS** buttons. Handlers confirm every request and translate it into the relevant Windows `shutdown` command. Choose one of the delay presets (immediately, 30s, 2m, 5m, 30m) or enter a custom number of minutes to schedule the action instead of triggering it right away.
 
 - **Restart** runs `shutdown /r /t 0` to reboot instantly.
 - **Restart to BIOS** runs `shutdown /r /fw /t 0`, which only works on UEFI-capable systems and instructs Windows to enter the firmware configuration UI on the next boot.
 
-On non-Windows hosts the endpoints respond with a message indicating that power control is unavailable.
+All POST endpoints (`/shutdown`, `/restart`, `/restart-bios`) accept an optional JSON body `{"delaySeconds": N}`. Values default to `0`, and negative numbers are rejected.
+
+On non-Windows hosts the endpoints respond with a message indicating that power control is unavailable. If you need to trigger these actions remotely, place the host on a [Tailscale](https://tailscale.com) tailnet (or a similar zero-trust overlay) so you can reach the HTTP UI over an encrypted WireGuard tunnel without exposing the shutdown/restart controls to the public internet.
 
 ## Prebuilt downloads
 
