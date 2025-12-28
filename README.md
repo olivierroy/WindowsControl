@@ -10,13 +10,15 @@ A minimal Go-powered web UI that exposes buttons to shut down, restart, or resta
 - Windows host if you intend to execute the actual shutdown command (tested on Windows 10/11; Windows 8+ is recommended for `/fw` firmware restarts, while shutdown/restart still work down to Windows 7)
 - Administrator privileges when running interactively or installing the service (required for invoking `shutdown` and interacting with SCM)
 
-## Running locally
+## Building locally
 
 ```bash
 go run .
 # or
 GOOS=windows go build -o windowscontrol.exe .
 ```
+
+## Usage
 
 Browse to `http://localhost:8181` and use the **Shut Down**, **Restart**, or **Restart to BIOS** buttons. Handlers confirm every request and translate it into the relevant Windows `shutdown` command. Choose one of the delay presets (immediately, 30s, 2m, 5m, 30m) or enter a custom number of minutes to schedule the action instead of triggering it right away.
 
@@ -57,8 +59,7 @@ The service host uses the same HTTP server internally and respects Stop/Shutdown
 
 ## Development
 
-- `go build ./...` to ensure the project compiles.
-- `go test ./...` when you add tests.
+- `go build .` to ensure the project compiles.
 - Modify `listenAddr` in `main.go` if you need to expose the server on another interface/port.
 
 ## License
